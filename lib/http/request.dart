@@ -11,6 +11,10 @@ class DioHttp {
     baseUrl: "", // 后端请求接口地址
     connectTimeout: 5000, // 接口请求超时时间
     receiveTimeout: 3000, // 响应流上前后两次接受到数据的间隔,单位为毫秒
+    // 请求的Content-Type，默认值是"application/json; charset=utf-8",Headers.formUrlEncodedContentType会自动编码请求体.
+    // contentType: Headers.formUrlEncodedContentType,
+    // 表示期望以那种格式(方式)接受响应数据。接受4种类型 `json`, `stream`, `plain`, `bytes`. 默认值是 `json`,
+    // responseType: ResponseType.json,
   ));
 
   /// 初始化
