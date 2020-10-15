@@ -29,6 +29,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
+  # Dio 用于数据请求
+  dio: ^3.0.10
+  # Cookie
+  cookie_jar: ^1.0.1
+  dio_cookie_manager: ^1.0.0
+  # 获取手机上的常用目录，比如：临时目录、文档目录等。
+  path_provider: ^1.6.14
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
