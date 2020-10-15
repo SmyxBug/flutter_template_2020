@@ -8,11 +8,9 @@ class DioHttp {
 
   /// 定义请求基本参数
   static final Dio dio = Dio(BaseOptions(
-    baseUrl: "",
-    // 后端请求接口地址
-    connectTimeout: 5000,
-    // 接口请求超市时间
-    receiveTimeout: 3000,
+    baseUrl: "", // 后端请求接口地址
+    connectTimeout: 5000, // 接口请求超时时间
+    receiveTimeout: 3000, // 响应流上前后两次接受到数据的间隔,单位为毫秒
   ));
 
   /// 初始化
@@ -26,8 +24,7 @@ class DioHttp {
     /// 添加dio拦截器
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions requestOptions) {
-      requestOptions.headers.addAll({
-        // 添加一些头部信息用于接口验签/公共参数
+      requestOptions.headers.addAll({ // 添加一些头部信息用于接口验签/公共参数
         'X-Token': '',
         'User-Token': '',
         'language': ''
