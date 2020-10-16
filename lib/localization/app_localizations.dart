@@ -17,7 +17,7 @@ class AppLocalizations {
 
   Map<String, String> _localizedStrings; // 翻译内容map
 
-  Future<bool> load(lang) async {
+  Future<bool> load() async {
     String jsonString = await rootBundle.loadString('lang/zh.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
     _localizedStrings = jsonMap.map((key, value) {
@@ -46,7 +46,7 @@ class _AppLocalizationsDelegate
   Future<AppLocalizations> load(Locale locale) async {
     // AppLocalizations类是JSON加载实际运行的地方
     AppLocalizations localizations = new AppLocalizations(locale);
-    await localizations.load(locale.languageCode);
+    await localizations.load();
     return localizations;
   }
 
