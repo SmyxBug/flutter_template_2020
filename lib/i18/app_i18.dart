@@ -2,23 +2,23 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sp_util/sp_util.dart';
 
-class AppLocalizations {
+class AppI18 {
   final Locale locale;
 
-  AppLocalizations(this.locale);
+  AppI18(this.locale);
 
-  static AppLocalizations of(BuildContext context) {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  static AppI18 of(BuildContext context) {
+    return Localizations.of<AppI18>(context, AppI18);
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppI18> delegate = _AppI18Delegate();
 
   Map<String, String> _localizedStrings; // 翻译内容map
 
   Future<bool> load() async {
-    String jsonString = await rootBundle.loadString('lang/zh.json');
+    String jsonString = await rootBundle.loadString('lang/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
     _localizedStrings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());
@@ -32,9 +32,8 @@ class AppLocalizations {
   }
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
-  const _AppLocalizationsDelegate();
+class _AppI18Delegate extends LocalizationsDelegate<AppI18> {
+  const _AppI18Delegate();
 
   @override
   bool isSupported(Locale locale) {
@@ -43,13 +42,15 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  Future<AppLocalizations> load(Locale locale) async {
+  Future<AppI18> load(Locale locale) async {
+    // 存放的是获国家代码 CN US 等 提供给后续的接口操作
+    SpUtil.putString('countryCode', locale.countryCode);
     // AppLocalizations类是JSON加载实际运行的地方
-    AppLocalizations localizations = new AppLocalizations(locale);
+    AppI18 localizations = new AppI18(locale);
     await localizations.load();
     return localizations;
   }
 
   @override
-  bool shouldReload(_AppLocalizationsDelegate old) => false;
+  bool shouldReload(_AppI18Delegate old) => false;
 }

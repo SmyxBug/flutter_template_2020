@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:template/utils/path_provider_utils.dart';
 
 class DioHttp {
@@ -26,12 +27,12 @@ class DioHttp {
     });
 
     /// 添加dio拦截器
-    dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions requestOptions) {
+    dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions requestOptions) {
+      String language = SpUtil.getString('countryCode'); // 获取i18设置的本地当前语种
       requestOptions.headers.addAll({ // 添加一些头部信息用于接口验签/公共参数
-        'X-Token': '',
-        'User-Token': '',
-        'language': ''
+        'X-Token': '', // TODO 
+        'User-Token': '', // TODO
+        'language': language
       });
       return requestOptions;
     }, onResponse: (Response response) {
