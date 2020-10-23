@@ -1,3 +1,6 @@
 {
-  "title": "internationalization"
+  "changeDarkMode": "Light/Dark Mode",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "automatic": "Auto"
 }

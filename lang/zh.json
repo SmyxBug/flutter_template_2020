@@ -1,3 +1,6 @@
 {
-  "title": "国际化"
+  "changeDarkMode": "切换深/浅色模式",
+  "darkMode": "深色模式",
+  "lightMode": "浅色模式",
+  "automatic": "跟随系统"
 }
