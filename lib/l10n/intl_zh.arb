@@ -2,5 +2,6 @@
   "changeDarkMode": "切换深/浅色模式",
   "darkMode": "深色模式",
   "lightMode": "浅色模式",
-  "automatic": "跟随系统"
+  "automatic": "跟随系统",
+  "changeLanguage": "切换语言"
 }

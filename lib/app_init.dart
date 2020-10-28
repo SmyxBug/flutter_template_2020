@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:template/i18/app_i18.dart';
+import 'package:template/generated/l10n.dart';
 import 'package:template/page/dark_mode_page.dart';
+import 'package:template/page/example_page.dart';
 import 'package:template/provider/dark_provider.dart';
+import 'package:template/utils/contant.dart';
 
 import 'http/request.dart';
 
 class AppInit {
   static void run() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await SpUtil.getInstance(); // 本地存储初始化
+    await SpUtil.getInstance(); // 本地存储工具类实例化(单例模式)
     runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: DarkModeProvider()), // 深色主题和浅色主题之间切换
@@ -36,27 +38,28 @@ class MyApp extends StatelessWidget {
                 brightness: Brightness.light,
                 primaryColor: Colors.blue,
               ),
-              darkTheme: ThemeData(brightness: Brightness.dark),
+              darkTheme: ThemeData.dark(),
               // 国际化配置
-              supportedLocales: [
-                Locale('zh', 'CN'),
-                Locale('en', 'US'),
-              ],
               localizationsDelegates: [
-                AppI18.delegate, // 自定义组件用来加载本地化json文件
+                S.delegate, // Flutter_intl 插件
                 GlobalMaterialLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate
               ],
-              // 获取设备的语言环境和本系统支持的语言环境对比
-              // 如果设备语言不在本app设置的语言列表则默认获取列表第一个语种
+              // 跟随系统设置语言
+              supportedLocales: S.delegate.supportedLocales,
+              // 插件目前不完善手动处理简繁体
               localeResolutionCallback: (locale, supportedLocales) {
-                for (var supportedLocale in supportedLocales) {
-                  if (supportedLocale.languageCode == locale.languageCode &&
-                      supportedLocale.countryCode == locale.countryCode) {
-                    return supportedLocale;
+                // 获取本地已经设置过的语言
+                String language = SpUtil.getString(SpConstant.language);
+                if (null != language) {
+                  for (var supportedLocale in supportedLocales) {
+                    if (supportedLocale.languageCode == language) {
+                      return supportedLocale;
+                    }
                   }
                 }
+                // 没有匹配项默认取第一个配置
                 return supportedLocales.first;
               },
               home: DarkModePage(),
@@ -70,28 +73,29 @@ class MyApp extends StatelessWidget {
                       primarySwatch: Colors.blue,
                     ),
               // 国际化配置
-              supportedLocales: [
-                Locale('zh', 'CN'),
-                Locale('en', 'US'),
-              ],
               localizationsDelegates: [
-                AppI18.delegate, // 自定义组件用来加载本地化json文件
+                S.delegate, // Flutter_intl 插件
                 GlobalMaterialLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate
               ],
-              // 获取设备的语言环境和本系统支持的语言环境对比
-              // 如果设备语言不在本app设置的语言列表则默认获取列表第一个语种
+              // 跟随系统设置语言
+              supportedLocales: S.delegate.supportedLocales,
+              // 插件目前不完善手动处理简繁体
               localeResolutionCallback: (locale, supportedLocales) {
-                for (var supportedLocale in supportedLocales) {
-                  if (supportedLocale.languageCode == locale.languageCode &&
-                      supportedLocale.countryCode == locale.countryCode) {
-                    return supportedLocale;
+                // 获取本地已经设置过的语言
+                String language = SpUtil.getString(SpConstant.language);
+                if (null != language) {
+                  for (var supportedLocale in supportedLocales) {
+                    if (supportedLocale.languageCode == language) {
+                      return supportedLocale;
+                    }
                   }
                 }
+                // 没有匹配项默认取第一个配置
                 return supportedLocales.first;
               },
-              home: DarkModePage(),
+              home: ExamplePage(),
             );
     });
   }

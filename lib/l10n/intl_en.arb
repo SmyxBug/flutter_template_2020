@@ -2,5 +2,6 @@
   "changeDarkMode": "Light/Dark Mode",
   "darkMode": "Dark Mode",
   "lightMode": "Light Mode",
-  "automatic": "Auto"
+  "automatic": "Auto",
+  "changeLanguage": "Language"
 }
